@@ -14,8 +14,6 @@ public class Board extends JPanel implements ActionListener {
     private int numberOfCards;
     private ArrayList<Card> cards;
 
-    //dodac losowanie id
-    //jesli id sie zgadza to trafilismy
     public Board(int numberOfCards) {
         this.numberOfCards = numberOfCards;
         cards = new ArrayList<Card>();
@@ -25,6 +23,7 @@ public class Board extends JPanel implements ActionListener {
 
         addToBoard();
         initListeners();
+        initCardsIds();
     }
     private void addToBoard() {
         for(Card card: cards) {
@@ -32,11 +31,16 @@ public class Board extends JPanel implements ActionListener {
         }
     }
     private void initCardsIds() {
-        ArrayList<Integer> listOfIds = generateNums(numberOfCards);
-        for(int i = 0 ;i<listOfIds.size(); i++) {
-            Card current = cards.get(i);
-            current.setId(listOfIds.get(i));
+        ArrayList<Integer> listOfIds = generateNums(numberOfCards/2);
+        if(cards.size() == listOfIds.size()) {
+            for(int i = 0 ;i<listOfIds.size(); i++) {
+                Card current = cards.get(i);
+                current.setId(listOfIds.get(i));
 
+                System.out.println(current.getId());
+            }
+        } else {
+            System.out.println("nierowne rozmiary !");
         }
     }
     private void initListeners() {
@@ -44,8 +48,7 @@ public class Board extends JPanel implements ActionListener {
             card.addActionListener(this);
         }
     }
-    //generuje wartosci id dla kart
-    //jesli karty maja takie same id to pasuja do siebie
+
     public  ArrayList<Integer> generateNums(int count) {
         ArrayList<Integer> list = new ArrayList<Integer>();
         Random generator = new Random();
@@ -64,13 +67,16 @@ public class Board extends JPanel implements ActionListener {
         }
         ArrayList<Integer> list2 = (ArrayList<Integer>)list.clone();
         list.addAll(list2);
-        System.out.println(list);
+        System.out.println("lista wygenerowana przez funkcje generateNums " + list);
         return list;
     }
 
-
+    private boolean checkCards(Card first, Card second) {
+        return second.getId() == first.getId();
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("clicked");
+        Card cardClicked = (Card)e.getSource();
+        System.out.println(cardClicked.getId() + " karta kliknetia");
     }
 }
