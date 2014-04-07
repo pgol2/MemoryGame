@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 /**
@@ -36,8 +37,6 @@ public class Board extends JPanel implements ActionListener {
             for(int i = 0 ;i<listOfIds.size(); i++) {
                 Card current = cards.get(i);
                 current.setId(listOfIds.get(i));
-
-                System.out.println(current.getId());
             }
         } else {
             System.out.println("nierowne rozmiary !");
@@ -67,7 +66,10 @@ public class Board extends JPanel implements ActionListener {
         }
         ArrayList<Integer> list2 = (ArrayList<Integer>)list.clone();
         list.addAll(list2);
+        long seed = System.nanoTime();
+        Collections.shuffle(list, new Random(seed));
         System.out.println("lista wygenerowana przez funkcje generateNums " + list);
+
         return list;
     }
 
