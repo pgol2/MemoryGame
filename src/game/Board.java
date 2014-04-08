@@ -1,11 +1,15 @@
 package game;
 
+import game.helpers.ImageLoader;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
+import java.io.File;
+
 
 /**
  * Created by pawel on 01/04/14.
@@ -14,6 +18,8 @@ public class Board extends JPanel implements ActionListener {
 
     private int numberOfCards;
     private ArrayList<Card> cards;
+
+    private Card previous;//just temporary solution
 
     public Board(int numberOfCards) {
         this.numberOfCards = numberOfCards;
@@ -25,6 +31,7 @@ public class Board extends JPanel implements ActionListener {
         addToBoard();
         initListeners();
         initCardsIds();
+        initCardsImages();
     }
     private void addToBoard() {
         for(Card card: cards) {
@@ -41,6 +48,19 @@ public class Board extends JPanel implements ActionListener {
         } else {
             System.out.println("nierowne rozmiary !");
         }
+    }
+    /*
+    ładuje obrazki z folderu
+    przypisuje je
+     */
+    //TODO przypisaie kartom setSelectedIcon na podstawie wczytanych nazw
+
+    private void initCardsImages() {
+        ImageLoader loader = new ImageLoader("cardImages");
+        ArrayList<String> list = loader.getListOfImageNames();
+        System.out.println("rozmiar list obrazko " + list.size());
+        System.out.println("rozmiar listy kart " + cards.size());
+
     }
     private void initListeners() {
         for(Card card: cards) {
@@ -66,8 +86,11 @@ public class Board extends JPanel implements ActionListener {
         }
         ArrayList<Integer> list2 = (ArrayList<Integer>)list.clone();
         list.addAll(list2);
+
         long seed = System.nanoTime();
         Collections.shuffle(list, new Random(seed));
+
+
         System.out.println("lista wygenerowana przez funkcje generateNums " + list);
 
         return list;
@@ -76,9 +99,19 @@ public class Board extends JPanel implements ActionListener {
     private boolean checkCards(Card first, Card second) {
         return second.getId() == first.getId();
     }
+
     @Override
+    //TODO caching previous button that was clicked in checking it
     public void actionPerformed(ActionEvent e) {
         Card cardClicked = (Card)e.getSource();
+        cardClicked.setSelectedIcon(new ImageIcon("cardImages/img1.png"));
+//        if(!cardClicked.isSelected()) {
+//            cardClicked.setSelected(true);
+//        } else {
+//            cardClicked.setSelected(false);
+//        }
+
+
         System.out.println(cardClicked.getId() + " karta kliknetia");
     }
 }

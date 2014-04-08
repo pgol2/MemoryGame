@@ -19,7 +19,6 @@ public class Game extends JFrame {
         setSize(GAME_WIDTH, GAME_HEIGHT);
 
         board = new Board(numberOfCards);
-        board.generateNums(numberOfCards/2);
         add(board, BorderLayout.CENTER);
     }
 }

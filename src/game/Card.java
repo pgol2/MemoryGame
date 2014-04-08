@@ -7,6 +7,7 @@ import javax.swing.*;
  */
 public class Card  extends JToggleButton{
     private int id;
+    private ImageIcon image;
 
     public int getId() {
         return id;
@@ -18,6 +19,8 @@ public class Card  extends JToggleButton{
 
     //dodac tutaj wlasciwy obrazek pod karta
     public Card() {
+
+
         setIcon(new ImageIcon("back.png"));
     }
 }
