@@ -1,7 +1,10 @@
 package game;
 
+import game.helpers.ImageLoader;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created by pawel on 01/04/14.
@@ -20,5 +23,9 @@ public class Game extends JFrame {
 
         board = new Board(numberOfCards);
         add(board, BorderLayout.CENTER);
+
+        ImageLoader loader = new ImageLoader("cardImages");
+        ArrayList<String> imageNames = loader.getImageNames();
+        board.setImageNames(imageNames);
     }
 }

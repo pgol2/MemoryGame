@@ -9,6 +9,14 @@ public class Card  extends JToggleButton{
     private int id;
     private ImageIcon image;
 
+    public ImageIcon getImage() {
+        return image;
+    }
+
+    public void setImage(ImageIcon image) {
+        this.image = image;
+    }
+
     public int getId() {
         return id;
     }

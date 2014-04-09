@@ -12,13 +12,19 @@ import java.io.FilenameFilter;
 import java.util.ArrayList;
 
 
-public class ImageLoader  {
-    private File DIR;
-    static final String[] EXTENSIONS = new String[] {"gif", "png", "bmp"};
-    static final FilenameFilter IMAGE_FILTER = new FilenameFilter() {
+public class ImageLoader {
+    File DIR ;
+
+    public ImageLoader(String path) {
+        DIR = new File(path);
+    }
+
+    String[] EXTENSIONS = new String[] {"gif", "png", "bmp"};
+
+    FilenameFilter IMAGE_FILTER = new FilenameFilter() {
         @Override
         public boolean accept(File dir, String name) {
-            for(final String ext: EXTENSIONS) {
+            for(String ext: EXTENSIONS) {
                 if (name.endsWith("." + ext)) {
                     return true;
                 }
@@ -27,27 +33,22 @@ public class ImageLoader  {
         }
     };
 
-    public ImageLoader(String DIR) {
-
-        this.DIR = new File(DIR);
-    }
-
-
-    public ArrayList<String> getListOfImageNames() {
-        ArrayList<String> imagesNames = new ArrayList<String>();
-        if(DIR.isDirectory()) {
-            for(File f: DIR.listFiles()) {
+    public ArrayList<String> getImageNames() {
+        ArrayList<String> imageNames = new ArrayList<String>();
+        if (DIR.isDirectory()) {
+            for (File f : DIR.listFiles(IMAGE_FILTER)) {
                 BufferedImage img = null;
 
                 try {
                     img = ImageIO.read(f);
-                    imagesNames.add(f.getName());
+                    imageNames.add(f.getName());
                 } catch (Exception e) {
+                    //add handling code here
                     e.printStackTrace();
                 }
             }
         }
-        return imagesNames;
+        return imageNames;
     }
 
 }

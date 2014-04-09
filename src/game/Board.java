@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.Random;
 import java.io.File;
 
@@ -18,6 +19,7 @@ public class Board extends JPanel implements ActionListener {
 
     private int numberOfCards;
     private ArrayList<Card> cards;
+    private ArrayList<String> imageNames;
 
     private Card previous;//just temporary solution
 
@@ -31,7 +33,6 @@ public class Board extends JPanel implements ActionListener {
         addToBoard();
         initListeners();
         initCardsIds();
-        initCardsImages();
     }
     private void addToBoard() {
         for(Card card: cards) {
@@ -49,19 +50,15 @@ public class Board extends JPanel implements ActionListener {
             System.out.println("nierowne rozmiary !");
         }
     }
-    /*
-    ładuje obrazki z folderu
-    przypisuje je
-     */
-    //TODO przypisaie kartom setSelectedIcon na podstawie wczytanych nazw
 
-    private void initCardsImages() {
-        ImageLoader loader = new ImageLoader("cardImages");
-        ArrayList<String> list = loader.getListOfImageNames();
-        System.out.println("rozmiar list obrazko " + list.size());
-        System.out.println("rozmiar listy kart " + cards.size());
-
+    public ArrayList<String> getImageNames() {
+        return imageNames;
     }
+
+    public void setImageNames(ArrayList<String> imageNames) {
+        this.imageNames = imageNames;
+    }
+
     private void initListeners() {
         for(Card card: cards) {
             card.addActionListener(this);
@@ -104,12 +101,8 @@ public class Board extends JPanel implements ActionListener {
     //TODO caching previous button that was clicked in checking it
     public void actionPerformed(ActionEvent e) {
         Card cardClicked = (Card)e.getSource();
-        cardClicked.setSelectedIcon(new ImageIcon("cardImages/img1.png"));
-//        if(!cardClicked.isSelected()) {
-//            cardClicked.setSelected(true);
-//        } else {
-//            cardClicked.setSelected(false);
-//        }
+        String path = "cardImages/img" + cardClicked.getId() + ".png";
+        cardClicked.setSelectedIcon(new ImageIcon(path));
 
 
         System.out.println(cardClicked.getId() + " karta kliknetia");
