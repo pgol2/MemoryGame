@@ -14,6 +14,7 @@ import java.io.File;
 
 /**
  * Created by pawel on 01/04/14.
+ * Class with main board with wrapps card objects
  */
 public class Board extends JPanel implements ActionListener {
 

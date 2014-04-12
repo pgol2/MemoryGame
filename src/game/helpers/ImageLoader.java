@@ -2,6 +2,8 @@ package game.helpers;
 
 /**
  * Created by pawel on 08/04/14.
+ * Class for loading images for cards
+ * takes path to the folder with images
  */
 
 import javax.annotation.processing.FilerException;
@@ -32,7 +34,11 @@ public class ImageLoader {
             return false;
         }
     };
-
+    /*
+    * get names of all images form path folder
+    * returns them with extnesions
+    * for example: 'image1.jpg'
+    * */
     public ArrayList<String> getImageNames() {
         ArrayList<String> imageNames = new ArrayList<String>();
         if (DIR.isDirectory()) {
