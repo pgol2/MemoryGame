@@ -30,7 +30,6 @@ public class Card  extends JToggleButton{
     //dodac tutaj wlasciwy obrazek pod karta
     public Card() {
 
-
         setIcon(new ImageIcon("back.png"));
     }
 }

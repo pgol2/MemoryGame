@@ -57,7 +57,13 @@ public class Board extends JPanel implements ActionListener {
     }
 
     public void setImageNames(ArrayList<String> imageNames) {
+
         this.imageNames = imageNames;
+
+        System.out.println("setting image names");
+        for(String list: this.imageNames) {
+            System.out.println(list);
+        }
     }
 
     private void initListeners() {
@@ -102,9 +108,14 @@ public class Board extends JPanel implements ActionListener {
     //TODO caching previous button that was clicked in checking it
     public void actionPerformed(ActionEvent e) {
         Card cardClicked = (Card)e.getSource();
+        previous = cardClicked;
+        if(checkCards(cardClicked,previous)) {
+            //delete them
+        } else {
+            previous = null;
+        }
         String path = "cardImages/img" + cardClicked.getId() + ".png";
         cardClicked.setSelectedIcon(new ImageIcon(path));
-
 
         System.out.println(cardClicked.getId() + " karta kliknetia");
     }

@@ -27,6 +27,7 @@ public class Game extends JFrame {
         board = new Board(numberOfCards);
         add(board, BorderLayout.CENTER);
 
+        //setting images for cards
         ImageLoader loader = new ImageLoader("cardImages");
         ArrayList<String> imageNames = loader.getImageNames();
         board.setImageNames(imageNames);
