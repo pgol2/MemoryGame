@@ -40,9 +40,12 @@ public class Board extends JPanel implements ActionListener {
             add(card);
         }
     }
-    private void removeCard() {
-        remove(cards.get(0));
+
+    private void removeCard(Card toRemove) {
+        remove(toRemove);
+        repaint();
     }
+
     //initializes cards with their id numbers
     private void initCardsIds() {
         ArrayList<Integer> listOfIds = generateNums(numberOfCards / 2);
@@ -97,15 +100,18 @@ public class Board extends JPanel implements ActionListener {
     //TODO caching previous button that was clicked in checking it
     public void actionPerformed(ActionEvent e) {
         Card cardClicked = (Card) e.getSource();
-
         clickNumber++;
+
+
         if(clickNumber == 1) {
             System.out.println("first click");
             previousCard = cardClicked;
         } else if(clickNumber == 2) {
             System.out.println("need to check");
-            if(previousCard.getId() == cardClicked.getId()){
+            if( (previousCard.getId() == cardClicked.getId()) && (previousCard != cardClicked) ){
                 System.out.println("te same");
+                removeCard(previousCard);
+                removeCard(cardClicked);
             }
         } else if(clickNumber > 2) {
             System.out.println("hide them");

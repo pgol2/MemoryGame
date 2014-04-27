@@ -4,6 +4,8 @@ import game.helpers.ImageLoader;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
@@ -16,7 +18,7 @@ public class Game extends JFrame {
     public static final int GAME_WIDTH = 800;
     public static final int GAME_HEIGHT = 600;
 
-    private Board board;
+    private Board gameBoard;
     public Game(int numberOfCards) {
         super("Memory game.Game");
         setLayout(new BorderLayout());
@@ -24,12 +26,62 @@ public class Game extends JFrame {
         setVisible(true);
         setSize(GAME_WIDTH, GAME_HEIGHT);
 
-        board = new Board(numberOfCards);
-        add(board, BorderLayout.CENTER);
+
+        //setJMenuBar(createMenuBar());
+        add(createMenuBar(), BorderLayout.NORTH); // TODO check this
+
+       createBoard(numberOfCards);
+
+
+
+
+    }
+    private void createBoard(int numberOfCards) {
+        gameBoard = new Board(numberOfCards);
+        add(gameBoard, BorderLayout.CENTER);
 
         //setting images for cards
         ImageLoader loader = new ImageLoader("cardImages");
         ArrayList<String> imageNames = loader.getImageNames();
-        board.setImageNames(imageNames);
+        gameBoard.setImageNames(imageNames);
+
     }
+
+    private JMenuBar createMenuBar() {
+        JMenuBar menuBar = new JMenuBar();
+
+
+
+        JMenu fileMenu = new JMenu("Menu");
+        JMenuItem exportDataItem = new JMenuItem("Najlepsze wyniki");
+        JMenuItem importDataItem = new JMenuItem("Zmień nick");
+        JMenuItem exitItem = new JMenuItem("Exit");
+
+
+        JMenu showMenu = new JMenu("Rozmiar planszy");
+        JCheckBoxMenuItem smallSize = new JCheckBoxMenuItem("8 kart");
+        smallSize.setSelected(true);
+        showMenu.add(smallSize);
+        fileMenu.add(showMenu);
+
+
+        fileMenu.add(exportDataItem);
+        fileMenu.add(importDataItem);
+        fileMenu.addSeparator();
+        fileMenu.add(exitItem);
+
+        smallSize.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JCheckBoxMenuItem item = (JCheckBoxMenuItem) e.getSource();
+                System.out.println("works");
+            }
+        });
+
+        menuBar.add(fileMenu);
+        return menuBar;
+    }
+
+
+
 }
