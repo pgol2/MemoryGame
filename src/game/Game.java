@@ -1,6 +1,7 @@
 package game;
 
 import game.helpers.ImageLoader;
+import game.helpers.StopWatch;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,6 +27,11 @@ public class Game extends JFrame {
         setVisible(true);
         setSize(GAME_WIDTH, GAME_HEIGHT);
 
+        //Stopwatch
+        //Container watchPanel = getContentPane();
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.lunchStopWatch();
+        add(stopWatch, BorderLayout.SOUTH);
 
         //setJMenuBar(createMenuBar());
         add(createMenuBar(), BorderLayout.NORTH); // TODO check this

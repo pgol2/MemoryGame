@@ -1,5 +1,6 @@
 package game;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -8,7 +9,14 @@ import java.util.Random;
  */
 public class Main {
     public static void main(String[] args) {
-       Game game = new Game(8);
+
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                Game game = new Game(8);
+            }
+        });
+
 
     }
 }
