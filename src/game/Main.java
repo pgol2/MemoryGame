@@ -1,16 +1,24 @@
 package game;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
 /**
  * Created by pawel on 01/04/14.
+ *  TODO:
+ *  - logowanie  i rejestracja nowych userow
+ *  - zapisywanie wynikow do bazay - czas
+ *  - wybor rozmiaru planszy
+ *  - (siec Hibernate)
+ *  - ( Web Service )
+ *  - Dodac frontned webowy i wypisywanie
  */
 public class Main {
     public static void main(String[] args) {
 
-        EventQueue.invokeLater(new Runnable() {
+        SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 Game game = new Game(8);

@@ -4,6 +4,7 @@ import game.helpers.ImageLoader;
 import game.helpers.StopWatch;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,10 +17,15 @@ import java.util.ArrayList;
  * and we keep Board object here
  */
 public class Game extends JFrame {
-    public static final int GAME_WIDTH = 800;
-    public static final int GAME_HEIGHT = 600;
+    public static  int GAME_WIDTH = 800;
+    public static  int GAME_HEIGHT = 600;
 
     private Board gameBoard;
+    private LoginForm loginForm;
+    private JMenuBar menuBar;
+    private StopWatch stopWatch;
+
+
     public Game(int numberOfCards) {
         super("Memory game.Game");
         setLayout(new BorderLayout());
@@ -29,21 +35,29 @@ public class Game extends JFrame {
 
         //Stopwatch
         //Container watchPanel = getContentPane();
-        StopWatch stopWatch = new StopWatch();
-        stopWatch.lunchStopWatch();
-        add(stopWatch, BorderLayout.SOUTH);
+        //stopWatch = new StopWatch();
+        //add(stopWatch, BorderLayout.SOUTH);
 
+
+        //stopWatch.lunchStopWatch();
+
+        //Menu
         //setJMenuBar(createMenuBar());
-        add(createMenuBar(), BorderLayout.NORTH); // TODO check this
+        createMenuBar();
 
-       createBoard(numberOfCards);
 
+//      LoginForm login = new LoginForm();
+//      add(login, BorderLayout.NORTH);
+
+        createBoard(8);
 
 
 
     }
-    private void createBoard(int numberOfCards) {
+
+    public void createBoard(int numberOfCards) {
         gameBoard = new Board(numberOfCards);
+        gameBoard.setVisible(true);
         add(gameBoard, BorderLayout.CENTER);
 
         //setting images for cards
@@ -53,21 +67,27 @@ public class Game extends JFrame {
 
     }
 
-    private JMenuBar createMenuBar() {
-        JMenuBar menuBar = new JMenuBar();
+    private void createMenuBar() {
+        menuBar = new JMenuBar();
 
 
 
         JMenu fileMenu = new JMenu("Menu");
         JMenuItem exportDataItem = new JMenuItem("Najlepsze wyniki");
-        JMenuItem importDataItem = new JMenuItem("Zmień nick");
+        JMenuItem importDataItem = new JMenuItem("Wyloguj");
         JMenuItem exitItem = new JMenuItem("Exit");
 
 
         JMenu showMenu = new JMenu("Rozmiar planszy");
-        JCheckBoxMenuItem smallSize = new JCheckBoxMenuItem("8 kart");
+
+        final JCheckBoxMenuItem smallSize = new JCheckBoxMenuItem("8 kart");
+        final JCheckBoxMenuItem mediumSize = new JCheckBoxMenuItem("12 kart");
+        final JCheckBoxMenuItem bigSize = new JCheckBoxMenuItem("16 kart");
         smallSize.setSelected(true);
+
         showMenu.add(smallSize);
+        showMenu.add(mediumSize);
+        showMenu.add(bigSize);
         fileMenu.add(showMenu);
 
 
@@ -76,16 +96,30 @@ public class Game extends JFrame {
         fileMenu.addSeparator();
         fileMenu.add(exitItem);
 
-        smallSize.addActionListener(new ActionListener() {
+        mediumSize.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JCheckBoxMenuItem item = (JCheckBoxMenuItem) e.getSource();
-                System.out.println("works");
+                smallSize.setSelected(false);
+                bigSize.setSelected(false);
+//                if(item.isSelected()) {
+//                    gameBoard.setVisible(true);
+//                } else {
+//                    gameBoard.setVisible(false);
+//                }
             }
         });
 
+        importDataItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showInputDialog("Twój nowy nick");
+            }
+        });
         menuBar.add(fileMenu);
-        return menuBar;
+
+
+        add(menuBar, BorderLayout.NORTH); // TODO check this
     }
 
 

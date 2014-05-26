@@ -34,6 +34,7 @@ public class ImageLoader {
             return false;
         }
     };
+
     /*
     * get names of all images form path folder
     * returns them with extnesions
