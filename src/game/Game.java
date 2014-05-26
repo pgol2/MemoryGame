@@ -21,7 +21,7 @@ public class Game extends JFrame {
     public static  int GAME_HEIGHT = 600;
 
     private Board gameBoard;
-    private LoginForm loginForm;
+    private LoginDialog loginDialog;
     private JMenuBar menuBar;
     private StopWatch stopWatch;
 
@@ -33,21 +33,9 @@ public class Game extends JFrame {
         setVisible(true);
         setSize(GAME_WIDTH, GAME_HEIGHT);
 
-        //Stopwatch
-        //Container watchPanel = getContentPane();
-        //stopWatch = new StopWatch();
-        //add(stopWatch, BorderLayout.SOUTH);
+        loginDialog = new LoginDialog(this);
 
-
-        //stopWatch.lunchStopWatch();
-
-        //Menu
-        //setJMenuBar(createMenuBar());
         createMenuBar();
-
-
-//      LoginForm login = new LoginForm();
-//      add(login, BorderLayout.NORTH);
 
         createBoard(8);
 
@@ -74,7 +62,7 @@ public class Game extends JFrame {
 
         JMenu fileMenu = new JMenu("Menu");
         JMenuItem exportDataItem = new JMenuItem("Najlepsze wyniki");
-        JMenuItem importDataItem = new JMenuItem("Wyloguj");
+        JMenuItem loginMenuItem = new JMenuItem("Zaloguj");
         JMenuItem exitItem = new JMenuItem("Exit");
 
 
@@ -92,7 +80,7 @@ public class Game extends JFrame {
 
 
         fileMenu.add(exportDataItem);
-        fileMenu.add(importDataItem);
+        fileMenu.add(loginMenuItem);
         fileMenu.addSeparator();
         fileMenu.add(exitItem);
 
@@ -110,10 +98,10 @@ public class Game extends JFrame {
             }
         });
 
-        importDataItem.addActionListener(new ActionListener() {
+        loginMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showInputDialog("Twój nowy nick");
+                loginDialog.setVisible(true);
             }
         });
         menuBar.add(fileMenu);
