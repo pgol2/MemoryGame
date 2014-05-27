@@ -4,15 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 /**
  * Created by pawel on 25/05/14.
  */
 public class LoginDialog extends Dialog {
 
-
-    private JLabel loginLabel;
-    private JLabel passwordLabel;
 
     private JTextField loginField;
     private JPasswordField passwordField;
@@ -26,9 +24,7 @@ public class LoginDialog extends Dialog {
         setSize(250, 250);
         setLocationRelativeTo(parent);
 
-        // lables
-        loginLabel = new JLabel("Login: ");
-        passwordLabel = new JLabel("Password: ");
+
 
         // fields
         loginField = new JTextField(10);
@@ -66,6 +62,47 @@ public class LoginDialog extends Dialog {
         add(submitBtn, gc);
 
 
+        submitBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String login = loginField.getText();
+                char[] pass = passwordField.getPassword();
+
+                if(isPasswordCorrect(pass)) {
+                    System.out.println("correct!");
+                } else {
+                    System.out.println("incorrect!");
+                }
+
+
+                System.out.println("password: " + login);
+                System.out.println("passowrd : " + pass);
+            }
+        });
+
+
     }
+
+
+
+
+    private static boolean isPasswordCorrect(char[] input) {
+
+        String goodPass = "warkamu";
+        char[] cgoodPass = goodPass.toCharArray();
+
+        boolean isCorrect = false;
+        if(input.length != cgoodPass.length) {
+            return false;
+        } else {
+            isCorrect = Arrays.equals(input, cgoodPass);
+        }
+
+        Arrays.fill(cgoodPass, '0');
+
+        return isCorrect;
+
+    }
+
 
 }

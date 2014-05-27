@@ -22,6 +22,8 @@ public class Game extends JFrame {
 
     private Board gameBoard;
     private LoginDialog loginDialog;
+    private RegisterDialog registerDialog;
+    private ScoresDialog scoresDialog;
     private JMenuBar menuBar;
     private StopWatch stopWatch;
 
@@ -34,6 +36,8 @@ public class Game extends JFrame {
         setSize(GAME_WIDTH, GAME_HEIGHT);
 
         loginDialog = new LoginDialog(this);
+        registerDialog = new RegisterDialog(this);
+        scoresDialog = new ScoresDialog(this);
 
         createMenuBar();
 
@@ -63,6 +67,7 @@ public class Game extends JFrame {
         JMenu fileMenu = new JMenu("Menu");
         JMenuItem exportDataItem = new JMenuItem("Najlepsze wyniki");
         JMenuItem loginMenuItem = new JMenuItem("Zaloguj");
+        JMenuItem registerMenuItem = new JMenuItem("Rejestruj");
         JMenuItem exitItem = new JMenuItem("Exit");
 
 
@@ -81,8 +86,11 @@ public class Game extends JFrame {
 
         fileMenu.add(exportDataItem);
         fileMenu.add(loginMenuItem);
+        fileMenu.add(registerMenuItem);
         fileMenu.addSeparator();
         fileMenu.add(exitItem);
+
+
 
         mediumSize.addActionListener(new ActionListener() {
             @Override
@@ -90,20 +98,44 @@ public class Game extends JFrame {
                 JCheckBoxMenuItem item = (JCheckBoxMenuItem) e.getSource();
                 smallSize.setSelected(false);
                 bigSize.setSelected(false);
-//                if(item.isSelected()) {
-//                    gameBoard.setVisible(true);
-//                } else {
-//                    gameBoard.setVisible(false);
-//                }
             }
         });
 
+
+        // logowanie
         loginMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                loginDialog.setVisible(true);
+                if(loginDialog.isVisible()) {
+                    loginDialog.setVisible(false);
+                } else {
+                    loginDialog.setVisible(true);
+                }
             }
         });
+
+        // rejestracja
+        registerMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(registerDialog.isVisible()) {
+                    registerDialog.setVisible(false);
+                } else {
+                    registerDialog.setVisible(true);
+                }
+            }
+        });
+
+
+        //najlepsze wyniki
+        exportDataItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                scoresDialog.setVisible(true);
+            }
+        });
+
+
         menuBar.add(fileMenu);
 
 
