@@ -1,13 +1,13 @@
 package game;
 
-import game.helpers.ImageLoader;
-import game.helpers.StopWatch;
+import game.helpers.*;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -27,6 +27,10 @@ public class Game extends JFrame {
     private JMenuBar menuBar;
     private StopWatch stopWatch;
 
+    private Player currentPlayer;
+
+
+
 
     public Game(int numberOfCards) {
         super("Memory game.Game");
@@ -42,7 +46,51 @@ public class Game extends JFrame {
         createMenuBar();
 
         createBoard(8);
+        gameBoard.setVisible(false);
+        loginDialog.setVisible(true);
 
+
+
+
+
+        // baza danych
+        final DatabaseConnector db = new DatabaseConnector();
+
+        try {
+            db.connect();
+            if(db != null) {
+                System.out.println("connected");
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        loginDialog.setLoginListener(new LoginListener() {
+            @Override
+            public void login(String user, String password) {
+                System.out.println("user form main frame  " + user);
+                System.out.println("passowrd form main frame " + password);
+
+
+
+                gameBoard.setVisible(true);
+                loginDialog.setVisible(false);
+            }
+        });
+
+        registerDialog.setRegisterListener(new RegisterListener() {
+            @Override
+            public void register(String username, String email, String password) {
+
+                try {
+                    db.register(username,email, password);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
 
     }
@@ -141,6 +189,9 @@ public class Game extends JFrame {
 
         add(menuBar, BorderLayout.NORTH); // TODO check this
     }
+
+
+
 
 
 

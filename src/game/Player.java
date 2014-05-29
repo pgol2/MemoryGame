@@ -5,21 +5,11 @@ package game;
  */
 public class Player {
     private int id;
-    private static int numberOfPlayers = 0;
-    private String name;
+    private String login;
+    private String email;
+    private String password;
 
-    public Player(String name) {
-        numberOfPlayers++;
-        this.id = numberOfPlayers;
-        this.name = name;
-    }
+    private static int numberOfPlayers = 1;
 
-    public static int getNumberOfPlayers() {
-        return numberOfPlayers;
-    }
 
-    public String getName() {
-
-        return name;
-    }
 }

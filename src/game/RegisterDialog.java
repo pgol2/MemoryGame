@@ -1,7 +1,12 @@
 package game;
 
+import game.helpers.LoginListener;
+import game.helpers.RegisterListener;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by pawel on 27/05/14.
@@ -13,21 +18,23 @@ public class RegisterDialog extends Dialog {
     private JPasswordField userpassword;
 
     private JButton registerBtn;
-    private JButton clearBtn;
+    private JButton closeBtn;
+
+    private RegisterListener registerListener;
 
 
 
     public RegisterDialog(JFrame parent) {
         super(parent, "Zarejestruj sie..", false);
-        setSize(250, 300);
+        setSize(400, 400);
         setLocationRelativeTo(parent);
 
-        username = new JTextField(10);
-        usermail = new JTextField(10);
-        userpassword = new JPasswordField(10);
+        username = new JTextField(20);
+        usermail = new JTextField(20);
+        userpassword = new JPasswordField(20);
 
         registerBtn = new JButton("Rejestruj");
-        clearBtn = new JButton("Wyczysc");
+        closeBtn = new JButton("Zamknij");
 
         setLayout(new GridBagLayout());
 
@@ -66,7 +73,35 @@ public class RegisterDialog extends Dialog {
         gc.gridx = 0;
         add(registerBtn, gc);
         gc.gridx++;
-        add(clearBtn, gc);
+        add(closeBtn, gc);
 
+        registerBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                String login = username.getText();
+                String email = usermail.getText();
+                String pass = new String(userpassword.getPassword());
+
+                // if register listener is set
+                if( registerListener != null ) {
+                    System.out.println("login : " + login + " email: " + pass);
+                    registerListener.register(login, email, pass);
+                }
+            }
+        });
+
+        closeBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+            }
+        });
+
+
+    }
+
+    public void setRegisterListener(RegisterListener registerListener) {
+        this.registerListener = registerListener;
     }
 }

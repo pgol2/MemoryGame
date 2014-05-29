@@ -1,5 +1,7 @@
 package game;
 
+import game.helpers.LoginListener;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -16,6 +18,11 @@ public class LoginDialog extends Dialog {
     private JPasswordField passwordField;
 
     private JButton submitBtn;
+    private JButton closeBtn;
+
+
+
+    private LoginListener loginListener;
 
 
     public LoginDialog(JFrame parent) {
@@ -30,7 +37,8 @@ public class LoginDialog extends Dialog {
         loginField = new JTextField(10);
         passwordField = new JPasswordField(10);
 
-        submitBtn = new JButton("submit");
+        submitBtn = new JButton("zaloguj");
+        closeBtn = new JButton("zamknij");
 
         setLayout(new GridBagLayout());
 
@@ -58,25 +66,29 @@ public class LoginDialog extends Dialog {
 
         //third row
         gc.gridy++;
-        gc.gridx = 1;
+        gc.gridx = 0;
         add(submitBtn, gc);
+        gc.gridx++;
+        add(closeBtn, gc);
 
 
         submitBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String login = loginField.getText();
-                char[] pass = passwordField.getPassword();
+                String pass = new String(passwordField.getPassword());
 
-                if(isPasswordCorrect(pass)) {
-                    System.out.println("correct!");
-                } else {
-                    System.out.println("incorrect!");
+                if(loginListener != null) {
+                    loginListener.login(login, pass);
+
                 }
+            }
+        });
 
-
-                System.out.println("password: " + login);
-                System.out.println("passowrd : " + pass);
+        closeBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
             }
         });
 
@@ -104,5 +116,9 @@ public class LoginDialog extends Dialog {
 
     }
 
+
+    public void setLoginListener(LoginListener loginListener) {
+        this.loginListener = loginListener;
+    }
 
 }
