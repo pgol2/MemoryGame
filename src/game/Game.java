@@ -73,10 +73,17 @@ public class Game extends JFrame {
                 System.out.println("user form main frame  " + user);
                 System.out.println("passowrd form main frame " + password);
 
+                boolean isLogged = false;
+                try {
+                    isLogged = db.loginToDB(user, password);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
 
-
-                gameBoard.setVisible(true);
-                loginDialog.setVisible(false);
+               if(isLogged) {
+                   gameBoard.setVisible(true);
+                   loginDialog.setVisible(false);
+               }
             }
         });
 
@@ -85,7 +92,7 @@ public class Game extends JFrame {
             public void register(String username, String email, String password) {
 
                 try {
-                    db.register(username,email, password);
+                    db.registerToDB(username, email, password);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
