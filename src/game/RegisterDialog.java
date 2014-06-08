@@ -22,6 +22,9 @@ public class RegisterDialog extends Dialog {
 
     private RegisterListener registerListener;
 
+    private GridBagConstraints  gc;
+
+    private JLabel userPrompt;
 
 
     public RegisterDialog(JFrame parent) {
@@ -38,7 +41,7 @@ public class RegisterDialog extends Dialog {
 
         setLayout(new GridBagLayout());
 
-        GridBagConstraints  gc = new GridBagConstraints();
+        gc = new GridBagConstraints();
 
 
         gc.weightx = 1;
@@ -68,12 +71,19 @@ public class RegisterDialog extends Dialog {
         gc.gridx++;
         add(userpassword, gc);
 
+
         //forth row
         gc.gridy++;
         gc.gridx = 0;
         add(registerBtn, gc);
         gc.gridx++;
         add(closeBtn, gc);
+
+        //fifth - user prompt
+        gc.gridy++;
+        gc.gridx = 0;
+        userPrompt = new JLabel();
+        add(userPrompt, gc);
 
         registerBtn.addActionListener(new ActionListener() {
             @Override
@@ -101,7 +111,13 @@ public class RegisterDialog extends Dialog {
 
     }
 
+    public void promptUser(String message) {
+        userPrompt.setText(message);
+
+    }
     public void setRegisterListener(RegisterListener registerListener) {
         this.registerListener = registerListener;
     }
+
+
 }

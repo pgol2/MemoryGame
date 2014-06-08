@@ -73,6 +73,7 @@ public class LoginDialog extends Dialog {
 
 
         submitBtn.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 String login = loginField.getText();
@@ -86,6 +87,7 @@ public class LoginDialog extends Dialog {
         });
 
         closeBtn.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);

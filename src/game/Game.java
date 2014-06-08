@@ -5,8 +5,7 @@ import game.helpers.*;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -17,8 +16,8 @@ import java.util.ArrayList;
  * and we keep Board object here
  */
 public class Game extends JFrame {
-    public static  int GAME_WIDTH = 800;
-    public static  int GAME_HEIGHT = 600;
+    public static  int GAME_WIDTH = 1000;
+    public static  int GAME_HEIGHT = 800;
 
     private Board gameBoard;
     private LoginDialog loginDialog;
@@ -35,10 +34,11 @@ public class Game extends JFrame {
     public Game(int numberOfCards) {
         super("Memory game.Game");
         setLayout(new BorderLayout());
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setVisible(true);
         setSize(GAME_WIDTH, GAME_HEIGHT);
 
+        currentPlayer = new Player();
         loginDialog = new LoginDialog(this);
         registerDialog = new RegisterDialog(this);
         scoresDialog = new ScoresDialog(this);
@@ -76,13 +76,16 @@ public class Game extends JFrame {
                 boolean isLogged = false;
                 try {
                     isLogged = db.loginToDB(user, password);
+
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
 
                if(isLogged) {
+                   currentPlayer.setLogin(user);
                    gameBoard.setVisible(true);
                    loginDialog.setVisible(false);
+
                }
             }
         });
@@ -90,12 +93,46 @@ public class Game extends JFrame {
         registerDialog.setRegisterListener(new RegisterListener() {
             @Override
             public void register(String username, String email, String password) {
-
+                boolean registerSuccess = false;
                 try {
-                    db.registerToDB(username, email, password);
+                    registerSuccess = db.registerToDB(username, email, password);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+
+                if(registerSuccess) {
+                    System.out.println("zarejestrowano poprawnie");
+                    registerDialog.promptUser("sukcess");
+                } else {
+                    System.out.println("blad rejestracji");
+                    registerDialog.promptUser("blad rejestracji");
+                }
+            }
+        });
+
+
+        gameBoard.setGameEndListner(new GameEndListener() {
+            @Override
+            public void endGame(double score) {
+
+               try {
+                 db.insertScore(currentPlayer.getLogin(), (int)score);
+               } catch(SQLException e ) {
+                   e.printStackTrace();
+               }
+
+
+            }
+        });
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                System.out.println("window closing");
+
+                dispose();
+                System.gc();
+
             }
         });
 
@@ -114,13 +151,25 @@ public class Game extends JFrame {
 
     }
 
+    public void recreateBoard(int numberOfCards) {
+
+        gameBoard = null;
+        gameBoard = new Board(numberOfCards);
+        add(gameBoard, BorderLayout.CENTER);
+
+        ImageLoader loader = new ImageLoader("cardImages");
+        ArrayList<String> imageNames = loader.getImageNames();
+        gameBoard.setImageNames(imageNames);
+        revalidate();
+    }
+
     private void createMenuBar() {
         menuBar = new JMenuBar();
 
 
 
         JMenu fileMenu = new JMenu("Menu");
-        JMenuItem exportDataItem = new JMenuItem("Najlepsze wyniki");
+        JMenuItem scoresMenuItem = new JMenuItem("Najlepsze wyniki");
         JMenuItem loginMenuItem = new JMenuItem("Zaloguj");
         JMenuItem registerMenuItem = new JMenuItem("Rejestruj");
         JMenuItem exitItem = new JMenuItem("Exit");
@@ -139,7 +188,7 @@ public class Game extends JFrame {
         fileMenu.add(showMenu);
 
 
-        fileMenu.add(exportDataItem);
+        fileMenu.add(scoresMenuItem);
         fileMenu.add(loginMenuItem);
         fileMenu.add(registerMenuItem);
         fileMenu.addSeparator();
@@ -147,12 +196,34 @@ public class Game extends JFrame {
 
 
 
+        smallSize.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JCheckBoxMenuItem item = (JCheckBoxMenuItem) e.getSource();
+                recreateBoard(8);
+                mediumSize.setSelected(false);
+                bigSize.setSelected(false);
+            }
+        });
+
         mediumSize.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JCheckBoxMenuItem item = (JCheckBoxMenuItem) e.getSource();
+                recreateBoard(12);
+
                 smallSize.setSelected(false);
                 bigSize.setSelected(false);
+            }
+        });
+
+        bigSize.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JCheckBoxMenuItem item = (JCheckBoxMenuItem) e.getSource();
+                recreateBoard(16);
+                smallSize.setSelected(false);
+                mediumSize.setSelected(false);
             }
         });
 
@@ -183,10 +254,23 @@ public class Game extends JFrame {
 
 
         //najlepsze wyniki
-        exportDataItem.addActionListener(new ActionListener() {
+        scoresMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 scoresDialog.setVisible(true);
+            }
+        });
+
+        exitItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int action = JOptionPane.showConfirmDialog(gameBoard, "Czy napewno chcesz wyjsc z tej niesamowitej gry", "Wyjdz", JOptionPane.OK_CANCEL_OPTION);
+
+                if(action == JOptionPane.OK_OPTION) {
+                    System.exit(0);
+                }
+
+
             }
         });
 

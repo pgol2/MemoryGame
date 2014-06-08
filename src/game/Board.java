@@ -1,5 +1,6 @@
 package game;
 
+import game.helpers.GameEndListener;
 import game.helpers.ImageLoader;
 
 import javax.swing.*;
@@ -16,13 +17,18 @@ import java.io.File;
 public class Board extends JPanel implements ActionListener {
 
     private int numberOfCards;
+    private int currentNumberOfCards;
     private ArrayList<Card> cards;
     private ArrayList<String> imageNames;
     private Card previousCard;
     private int clickNumber=0;
+    private static int totalClicks = 0;
+
+    private GameEndListener gameEndListner;
 
     public Board(int numberOfCards) {
         this.numberOfCards = numberOfCards;
+        currentNumberOfCards = numberOfCards;
         cards = new ArrayList<Card>();
 
         for (int i = 0; i < numberOfCards; i++) {
@@ -32,6 +38,8 @@ public class Board extends JPanel implements ActionListener {
         addToBoard();
         initListeners();
         initCardsIds();
+
+
     }
 
     //dodaje karty do planszy
@@ -96,25 +104,47 @@ public class Board extends JPanel implements ActionListener {
     private void flipAllCards() {
         for(Card card : cards) card.setSelected(false);
     }
+
+    private void showResult(double score) {
+        int value = (int)score;
+        add(new JLabel("Twój wynik to:  " +  value));
+        revalidate();
+    }
+
+    private double calculateResult() {
+        double cards = numberOfCards;
+        double clicks = totalClicks;
+
+        return (cards/clicks) * 1000;
+    }
     @Override
     //TODO caching previous button that was clicked in checking it
     public void actionPerformed(ActionEvent e) {
+        ++totalClicks;
+        System.out.println("total clicks " + totalClicks);
         Card cardClicked = (Card) e.getSource();
         clickNumber++;
 
 
         if(clickNumber == 1) {
-            System.out.println("first click");
             previousCard = cardClicked;
         } else if(clickNumber == 2) {
-            System.out.println("need to check");
             if( (previousCard.getId() == cardClicked.getId()) && (previousCard != cardClicked) ){
-                System.out.println("te same");
                 removeCard(previousCard);
                 removeCard(cardClicked);
+                currentNumberOfCards -= 2;
+                if(currentNumberOfCards == 0) {
+                    System.out.println("koniec!");
+                    double score = calculateResult();
+                    showResult(score);
+                    repaint();
+
+                    if(gameEndListner != null) {
+                        gameEndListner.endGame(score);
+                    }
+                }
             }
         } else if(clickNumber > 2) {
-            System.out.println("hide them");
             flipAllCards();
             clickNumber=0;
         }
@@ -125,6 +155,10 @@ public class Board extends JPanel implements ActionListener {
         cardClicked.setSelectedIcon(new ImageIcon(path));
 
 
-        System.out.println(cardClicked.getId() + " karta kliknetia");
     }
+
+    public void setGameEndListner(GameEndListener listener) {
+        this.gameEndListner = listener;
+    }
+
 }

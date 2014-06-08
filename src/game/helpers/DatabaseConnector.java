@@ -37,14 +37,17 @@ public class DatabaseConnector {
 
 
 
-    public void registerToDB(String login, String email, String password) throws SQLException {
+    public boolean registerToDB(String login, String email, String password) throws SQLException {
 
+        boolean success = false;
         String checkSql = "SELECT COUNT(*) FROM users WHERE login=?";
 
         PreparedStatement checkStmt = connection.prepareStatement(checkSql);
 
         checkStmt.setString(1, login);
-        ResultSet checkResult = checkStmt.executeQuery();
+        ResultSet checkResult = checkStmt.executeQuery(); // TODO check here is the insert was successcus
+        //TODO prompt user if insert was succesfull
+
 
         checkResult.next();
         int count = checkResult.getInt(1);
@@ -63,13 +66,16 @@ public class DatabaseConnector {
             insertStmt.executeUpdate();
 
             insertStmt.close();
+            success = true;
         } else {
             System.out.println("can't register user already exists");
+            success = false;
+
         }
 
         checkStmt.close();
 
-
+        return success;
     }
 
     public boolean loginToDB(String login, String password) throws SQLException {
@@ -96,5 +102,21 @@ public class DatabaseConnector {
 
         checkStmt.close();
         return retValue;
+    }
+
+    public boolean insertScore(String user, double score) throws SQLException {
+
+        boolean inserted = false;
+
+        String insertScoreSql = "INSERT INTO scores (login, score) VALUES (?, ?)";
+
+        PreparedStatement insertScoreStmt = connection.prepareStatement(insertScoreSql);
+        insertScoreStmt.setString(1, user);
+        insertScoreStmt.setDouble(2, score);
+
+        insertScoreStmt.executeUpdate();
+
+
+        return inserted;
     }
 }
