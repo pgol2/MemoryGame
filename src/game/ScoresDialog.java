@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 /**
  * Created by pawel on 27/05/14.
@@ -11,6 +12,9 @@ import java.awt.event.ActionListener;
 public class ScoresDialog extends Dialog {
 
     private JButton closeBtn;
+
+    GridBagConstraints gc;
+
 
     public ScoresDialog(JFrame parent) {
         super(parent, "Najlepsz wyniki", false);
@@ -22,7 +26,7 @@ public class ScoresDialog extends Dialog {
 
         setLayout(new GridBagLayout());
 
-        GridBagConstraints gc = new GridBagConstraints();
+        gc = new GridBagConstraints();
 
 
         gc.weightx = 1;
@@ -32,10 +36,20 @@ public class ScoresDialog extends Dialog {
         gc.gridy = 0;
         gc.gridx = 0;
 
-        // first row
+        // last row
         add(closeBtn, gc);
 
-        add(closeBtn);
+
+        ArrayList<String> scores = new ArrayList<String>();
+        scores.add("Pawel 230 puntkow");
+        scores.add("Pawel 230 puntkow");
+        scores.add("Pawel 230 puntkow");
+
+        addScores(scores);
+
+
+
+        //event handlers
         closeBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -44,5 +58,13 @@ public class ScoresDialog extends Dialog {
         });
 
 
+    }
+
+    public void addScores(ArrayList<String> scores) {
+        for(String score : scores) {
+            ++gc.gridy;
+            add(new JLabel(score), gc);
+
+        }
     }
 }

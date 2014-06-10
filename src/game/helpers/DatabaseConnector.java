@@ -1,6 +1,7 @@
 package game.helpers;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * Created by pawel on 28/05/14.
@@ -118,5 +119,33 @@ public class DatabaseConnector {
 
 
         return inserted;
+    }
+
+
+    public ArrayList<String> getUserScores(String user) throws SQLException {
+        //TODO debug this code !
+        ArrayList<String> scores = new ArrayList<String>();
+
+        boolean found = false;
+        String getSql = "SELECT score FROM scores WHERE login = '?'";
+
+        PreparedStatement checkStmt = connection.prepareStatement(getSql);
+
+        checkStmt.setString(1, user);
+        ResultSet result = checkStmt.executeQuery();
+        String scoreVal = "";
+        String score = "";
+
+        while (result.next()) {
+            scoreVal = result.getString(0);
+            score = user + " " + scoreVal;
+            scores.add(score);
+        }
+
+        for(String sc: scores) {
+            System.out.println(sc + "scoreee !");
+        }
+        return scores;
+
     }
 }

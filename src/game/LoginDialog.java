@@ -24,6 +24,9 @@ public class LoginDialog extends Dialog {
 
     private LoginListener loginListener;
 
+    private JLabel userPrompt;
+
+
 
     public LoginDialog(JFrame parent) {
 
@@ -71,6 +74,12 @@ public class LoginDialog extends Dialog {
         gc.gridx++;
         add(closeBtn, gc);
 
+        //forth row - prompt
+        gc.gridy++;
+        gc.gridx = 0;
+        userPrompt = new JLabel();
+        add(userPrompt, gc);
+
 
         submitBtn.addActionListener(new ActionListener() {
 
@@ -115,6 +124,11 @@ public class LoginDialog extends Dialog {
         Arrays.fill(cgoodPass, '0');
 
         return isCorrect;
+
+    }
+
+    public void promptUser(String message) {
+        userPrompt.setText(message);
 
     }
 

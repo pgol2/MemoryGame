@@ -86,6 +86,9 @@ public class Game extends JFrame {
                    gameBoard.setVisible(true);
                    loginDialog.setVisible(false);
 
+               } else {
+                   loginDialog.promptUser("Niepoprawny login lub haslo");
+
                }
             }
         });
@@ -99,6 +102,7 @@ public class Game extends JFrame {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+
 
                 if(registerSuccess) {
                     System.out.println("zarejestrowano poprawnie");
