@@ -10,10 +10,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * Created by pawel on 01/04/14.
- * Main window with game
- * We start our game here
- * and we keep Board object here
+ * Created by pawel on 01/04/14
+ * TODO:
+ * - facebook sharing
+ * - multiplayer
+ * - unit tests
+ * - czas gry
+ * -
  */
 public class Game extends JFrame {
     public static  int GAME_WIDTH = 1000;

@@ -41,9 +41,9 @@ public class ScoresDialog extends Dialog {
 
 
         ArrayList<String> scores = new ArrayList<String>();
-        scores.add("Pawel 230 puntkow");
-        scores.add("Pawel 230 puntkow");
-        scores.add("Pawel 230 puntkow");
+        scores.add("Pawel 360 puntkow");
+        scores.add("Pawel 400 puntkow");
+        scores.add("Pawel 470 puntkow");
 
         addScores(scores);
 

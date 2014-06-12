@@ -31,7 +31,7 @@ public class LoginDialog extends Dialog {
     public LoginDialog(JFrame parent) {
 
         super(parent, "Zaloguj sie..", false);
-        setSize(250, 250);
+        setSize(450, 450);
         setLocationRelativeTo(parent);
 
 
