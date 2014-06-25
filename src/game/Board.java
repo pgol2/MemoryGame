@@ -67,9 +67,6 @@ public class Board extends JPanel implements ActionListener {
         }
     }
 
-    public ArrayList<String> getImageNames() {
-        return imageNames;
-    }
 
     public void setImageNames(ArrayList<String> imageNames) {
 

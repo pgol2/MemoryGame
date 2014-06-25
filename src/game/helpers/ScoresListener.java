@@ -5,5 +5,5 @@ package game.helpers;
  */
 public interface ScoresListener {
 
-    public void getStopScores();
+    public void getTopScores();
 }

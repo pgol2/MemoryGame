@@ -261,6 +261,22 @@ public class Game extends JFrame {
 
 
         //najlepsze wyniki
+        ArrayList<String> users = new ArrayList<String>();
+        users.add("pgol");
+        users.add("mysiaczkaa");
+        users.add("marcin");
+
+        ArrayList<Integer> scores = new ArrayList<Integer>();
+        scores.add(1);
+        scores.add(2);
+        scores.add(3);
+
+        ArrayList<String> topScores = new ArrayList<String>();
+        topScores = scoresDialog.buildScores(users, scores);
+
+
+        scoresDialog.addScores(topScores);
+
         scoresMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

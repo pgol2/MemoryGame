@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by pawel on 27/05/14.
@@ -39,13 +40,21 @@ public class ScoresDialog extends Dialog {
         // last row
         add(closeBtn, gc);
 
-
-        ArrayList<String> scores = new ArrayList<String>();
-        scores.add("Pawel 360 puntkow");
-        scores.add("Pawel 400 puntkow");
-        scores.add("Pawel 470 puntkow");
-
-        addScores(scores);
+//        ArrayList<String> users = new ArrayList<String>();
+//        users.add("pgol");
+//        users.add("mysiaczkaa");
+//        users.add("marcin");
+//
+//        ArrayList<Integer> scores = new ArrayList<Integer>();
+//        scores.add(222);
+//        scores.add(3332);
+//        scores.add(666);
+//
+//        ArrayList<String> topScores = new ArrayList<String>();
+//        topScores = buildScores(users, scores);
+//
+//
+//        addScores(topScores);
 
 
 
@@ -66,5 +75,23 @@ public class ScoresDialog extends Dialog {
             add(new JLabel(score), gc);
 
         }
+    }
+
+    public ArrayList<String> buildScores(ArrayList<String> users, ArrayList<Integer> scores) {
+
+        ArrayList<String> Scores = new ArrayList<String>();
+
+        Iterator it = users.iterator();
+        Iterator it2 = scores.iterator();
+
+        while (it.hasNext() && it2.hasNext()) {
+            String user = (String) it.next();
+            int score = (Integer) it2.next();
+
+            String scoreRow = user + " " + score + " punktow";
+            Scores.add(scoreRow);
+        }
+
+        return Scores;
     }
 }

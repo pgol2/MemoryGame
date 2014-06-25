@@ -2,6 +2,7 @@ package game.helpers;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by pawel on 28/05/14.
@@ -121,7 +122,26 @@ public class DatabaseConnector {
         return inserted;
     }
 
+    /*
+    For getting top scores
+     */
+    public ArrayList<String> getTopScores() throws SQLException {
 
+        ArrayList<String> topScores = new ArrayList<String>();
+        String getSql = "SELECT login,score FROM scores ORDER BY score DESC";
+
+        PreparedStatement checkStmt = connection.prepareStatement(getSql);
+
+        ResultSet result = checkStmt.executeQuery();
+        while (result.next()) {
+            String user = result.getString(1);
+        }
+
+        return topScores;
+    }
+    /*
+    This one is for charts
+     */
     public ArrayList<String> getUserScores(String user) throws SQLException {
         //TODO debug this code !
         ArrayList<String> scores = new ArrayList<String>();

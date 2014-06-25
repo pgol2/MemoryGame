@@ -18,13 +18,24 @@ import java.util.Random;
 public class Main {
     public static void main(String[] args) {
 
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                Game game = new Game(8);
-            }
-        });
+//        SwingUtilities.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {
+//                Game game = new Game(8);
+//            }
+//        });
 
+        SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+
+                Game game = new Game(8);
+
+                return null;
+            }
+        };
+
+        worker.execute();
 
     }
 }
