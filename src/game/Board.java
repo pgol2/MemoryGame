@@ -2,6 +2,7 @@ package game;
 
 import game.helpers.GameEndListener;
 import game.helpers.ImageLoader;
+import game.helpers.Twitter;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -135,6 +136,9 @@ public class Board extends JPanel implements ActionListener {
                     double score = calculateResult();
                     showResult(score);
                     repaint();
+
+                    Twitter twitterApi = new Twitter();
+
 
                     if(gameEndListner != null) {
                         gameEndListner.endGame(score);

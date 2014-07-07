@@ -2,6 +2,7 @@
   <library name="mysql-connector-java-5.1.30-bin">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/mysql-connector-java-5.1.30-bin.jar!/" />
+      <root url="jar://$USER_HOME$/Desktop/twitter4j-4.0.2/lib/twitter4j-core-4.0.2.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
