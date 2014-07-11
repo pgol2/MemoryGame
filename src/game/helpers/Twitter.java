@@ -9,6 +9,8 @@ import twitter4j.conf.ConfigurationBuilder;
  */
 public class Twitter {
 
+    private Twitter twitterApi;
+
     public Twitter() {
         ConfigurationBuilder cb = new ConfigurationBuilder();
         cb.setDebugEnabled(true)
@@ -16,11 +18,12 @@ public class Twitter {
                 .setOAuthConsumerSecret("f0NiOJ3qmAjRbv3pWAtv4qa9VEy99JXMAYXJpRte11vs8HyNt1")
                 .setOAuthAccessToken("2609930672-YDBcEL5rfDHQAaQcZUnRn5J1zWl5t5xSYemSl0o")
                 .setOAuthAccessTokenSecret("RoDdnr81NIAocq8IszF4RJLS0oxH7TNwzfoqrZyftBrsY");
-        TwitterFactory tf = new TwitterFactory(cb.build());
-        Twitter twitter = (Twitter) tf.getSingleton();
 
 
+        twitterApi = (Twitter) new TwitterFactory(cb.build()).getInstance();
+    }
 
-
+    public void PostScore(String user, String score) {
+        String str = "Gracz " + user + " zdobyl: " + score + " punktow";
     }
 }
