@@ -1,6 +1,7 @@
 package game;
 
 import game.helpers.*;
+import twitter4j.TwitterException;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -127,6 +128,13 @@ public class Game extends JFrame {
                } catch(SQLException e ) {
                    e.printStackTrace();
                }
+
+                Twitter twitter = new Twitter();
+                try {
+                    twitter.PostScore(currentPlayer.getLogin(), Double.toString(score));
+                } catch (TwitterException e1) {
+                    e1.printStackTrace();
+                }
 
 
             }
